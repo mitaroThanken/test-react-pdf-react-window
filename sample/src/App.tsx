@@ -118,6 +118,12 @@ function App() {
     console.info({ tot });
   }
 
+  const [estimatedItemSize, setEstimatedItemSize] = useState(height);
+  useEffect(() => {
+    if (!pageViewports) return;
+    setEstimatedItemSize(getPageHeight(0));
+  }, [pageViewports, getPageHeight])
+
   return (
     <div className="App">
       <Document file="r3_all.pdf"
@@ -134,7 +140,8 @@ function App() {
               width={width}
               height={height}
               itemCount={pdf.numPages}
-              itemSize={getPageHeight}>
+              itemSize={getPageHeight}
+              estimatedItemSize={estimatedItemSize}>
               {Row(effectiveWidth)}
             </VariableSizeList>
           )
