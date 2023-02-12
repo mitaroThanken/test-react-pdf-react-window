@@ -10,6 +10,7 @@ import { LoadingProcessData } from 'react-pdf';
 /** スクロールバーを含む幅 */
 const width = 500;
 const height = width * 1.5;
+const border = 1;
 
 interface RowProps {
   index: number,
@@ -21,7 +22,10 @@ const Row = (width: number) => (props: RowProps) => {
   };
 
   return (
-    <div style={props.style}>
+    <div style={{
+      ...props.style,
+      borderBottom: `solid ${border}px`
+    }}>
       <Page
         onRenderSuccess={onPageRenderSuccess}
         pageIndex={props.index}
@@ -106,7 +110,7 @@ function App() {
     const scale = effectiveWidth / pageViewport.width;
     const actualHeight = pageViewport.height * scale;
 
-    return actualHeight;
+    return Math.floor(actualHeight) + border;
   }, [pageViewports, effectiveWidth]);
 
   const onDocumentLoadProgress = ({ loaded, total }: LoadingProcessData) => {
